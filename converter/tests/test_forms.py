@@ -27,3 +27,11 @@ class PdfConverterFormTest(TestCase):
             # self.assertIn('file', form.errors.keys())
             # self.assertIn('Allowed extensions are: pdf', form.errors['file'])
 
+    def test_form_is_true_if_pdf_file_is_submitted(self):
+        with open(PDF_FILE, 'rb') as f:
+            upload_file = f.read()
+            post_dict = {'title': 'test title'}
+            form_data = {'file': SimpleUploadedFile(f.name, upload_file)}
+            form = PdfConverterForm(post_dict, form_data)
+            self.assertTrue(form.is_valid())
+
