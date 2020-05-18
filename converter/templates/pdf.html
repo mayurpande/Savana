@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
 
 {% block content %}
-    <form method="POST" action="#" role="form">
+    <form method="POST" action="{% url 'pdf' %}" role="form" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form|crispy }}
+        {{ form.as_p }}
         {% if form.errors %}
             <div class="form-group has-error">
                 <div class="help-block">{{ form.text.errors }}</div>
