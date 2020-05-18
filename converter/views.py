@@ -20,8 +20,9 @@ def pdf(request):
 
     if request.method == 'POST':
         form = PdfConverterForm(request.POST, request.FILES)
-        handle_upload_file(request.FILES['file'])
-        return redirect('converted_pdf')
+        if form.is_valid():
+            handle_upload_file(request.FILES['file'])
+            return redirect('converted_pdf')
 
     return render(request, 'pdf.html', {'form': form})
 

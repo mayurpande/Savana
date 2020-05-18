@@ -34,8 +34,7 @@ class PdfConverterTest(RouteTemplateTester):
     def test_POST_form_redirects(self, mock_handle_upload_file):
         with open(PDF_FILE, 'rb') as f:
             upload_file = f.read()
-            post_dict = {'title': 'test title'}
-            form_data = {'file': SimpleUploadedFile(f.name, upload_file)}
+            form_data = {'title': 'test title', 'file': SimpleUploadedFile(f.name, upload_file)}
             response = self.client.post(reverse('pdf'), form_data)
             self.assertEqual(mock_handle_upload_file.called, True)
             self.assertRedirects(response, reverse('converted_pdf'))
@@ -44,9 +43,8 @@ class PdfConverterTest(RouteTemplateTester):
     def test_POST_form_saves_file_as_pdf(self, mock_handle_upload_file):
         with open(PDF_FILE, 'rb') as f:
             upload_file = f.read()
-            post_dict = {'title': 'test title'}
-            form_data = {'file': SimpleUploadedFile(f.name, upload_file)}
-            self.client.post(reverse('pdf'), form_data)
+            form_data = {'title': 'test title', 'file': SimpleUploadedFile(f.name, upload_file)}
+            response = self.client.post(reverse('pdf'), form_data)
             self.assertEqual(mock_handle_upload_file.called, True)
 
 
