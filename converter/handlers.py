@@ -7,3 +7,4 @@ def handle_upload_file(attachment):
         for chunk in attachment.chunks():
             destination.write(chunk)
 
+

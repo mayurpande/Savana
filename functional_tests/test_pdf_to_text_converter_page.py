@@ -28,7 +28,10 @@ class PdfTextConverterPageTest(Base):
         self.browser.find_element_by_xpath("//button[@type='submit']").click()
         self.browser.find_element_by_css_selector('#id_file:invalid')
 
-
         # User uploads a PDF file - It displays a success message
+        self.browser.find_element_by_name('title').send_keys('Pdf file')
+        self.browser.find_element_by_name('file').send_keys(PDF_FILE)
+        self.browser.find_element_by_xpath("//button[@type='submit']").click()
+        self.browser.find_element_by_css_selector('.has-error').text = 'PDF Converted Link is below to download text file'
 
         # User is redirected to a page where it shows the text
