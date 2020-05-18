@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-
+    <form method="POST" action="#" role="form">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if form.errors %}
+            <div class="form-group has-error">
+                <div class="help-block">{{ form.text.errors }}</div>
+            </div>
+        {% endif %}
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
 {% endblock %}

@@ -1,8 +1,8 @@
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 
 
-class Base(LiveServerTestCase):
+class Base(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
