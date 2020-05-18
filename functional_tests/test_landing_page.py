@@ -1,23 +1,16 @@
-from django.test import LiveServerTestCase
-from selenium import webdriver
+from .base import Base
 
 
-class LandingPageTest(LiveServerTestCase):
+class LandingPageTest(Base):
 
     """
     This is a functional test class to handle the test operations for the landing page from user's point of view.
     """
 
-    def setUp(self):
-        self.browser = webdriver.Firefox()
-
-    def tearDown(self):
-        self.browser.quit()
-
     def test_landing_page(self):
 
         # User goes to live server url
-        self.browser.get(self.live_server_url + '/pdf_converter/')
+        self.browser.get(self.live_server_url + '/converter/')
 
         # There is a title
         self.assertIn('PDF/TXT Converter', self.browser.title)

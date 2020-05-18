@@ -15,4 +15,11 @@ class HomePageTest(RouteTemplateTester):
 
     def test_home_page_returns_template(self):
 
-        self.route('/pdf_converter/', 'home.html')
+        self.route('/converter/', 'home.html')
+
+
+class PdfConverterTest(RouteTemplateTester):
+
+    def test_pdf_converter_page_returns_template(self):
+
+        self.route('/converter/pdf/', 'pdf.html')

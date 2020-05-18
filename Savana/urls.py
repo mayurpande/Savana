@@ -18,5 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('pdf_converter/', include('converter.urls')),
+    path('converter/', include('converter.urls')),
 ]

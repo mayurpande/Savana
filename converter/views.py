@@ -5,3 +5,8 @@ from django.shortcuts import render
 def index(request):
 
     return render(request, 'home.html')
+
+
+def pdf(request):
+
+    return render(request, 'pdf.html')
