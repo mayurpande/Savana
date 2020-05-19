@@ -34,4 +34,5 @@ def pdf(request):
     return render(request, 'pdf.html', {'form': form})
 
 
-
+def txt(request):
+    pass
