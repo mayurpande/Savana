@@ -2,6 +2,7 @@ import os
 
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.http import HttpResponse
 from django.test import TestCase
 from django.urls import reverse
 
@@ -50,12 +51,6 @@ class PdfConverterTest(RouteTemplateTester):
 
         self.route(reverse('pdf'), 'pdf.html')
 
-    def test_POST_form_redirects(self):
-
-        """Asserts redirect"""
-
-        self.assertRedirects(self.response, reverse('converted_pdf'))
-
     def test_POST_form_saves_file_as_pdf(self):
 
         """Asserts pdf file is exists (after being saved from handle_upload_file)"""
@@ -85,6 +80,12 @@ class PdfConverterTest(RouteTemplateTester):
             content = content.strip("\n")
             self.assertTrue(content.endswith("discharge."))
 
+    def test_pdf_view_returns_http_response(self):
+        file_path = os.path.join(settings.MEDIA_ROOT, "converted_text.txt")
+        with open(file_path, 'r') as f:
+            response = HttpResponse(f.read(), content_type='text/plain')
+            response['Content-Disposition'] = 'attachment; filename=' + '"' + os.path.basename(file_path)
+            self.assertEqual(response.status_code, 200)
 
 
 
