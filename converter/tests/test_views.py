@@ -62,11 +62,28 @@ class PdfConverterTest(RouteTemplateTester):
 
         self.assertEqual(os.path.exists(os.path.join(settings.MEDIA_ROOT, "Report1.pdf")), True)
 
-    def test_handle_convert_pdf_to_text(self):
+    def test_handle_text_file_saved(self):
 
         """Asserts text file is exists (after being converted and saved in handle_converting_pdf_to_text"""
 
         self.assertEqual(os.path.exists(os.path.join(settings.MEDIA_ROOT, "converted_text.txt")), True)
+
+    def test_check_txt_file_starts_with_specific_string(self):
+
+        """Asserts text file starts with specified string from PDF file"""
+
+        with open(os.path.join(settings.MEDIA_ROOT, "converted_text.txt")) as f:
+            content = f.read()
+            self.assertTrue(content.startswith("RE"))
+
+    def test_check_txt_file_ends_with_specific_string(self):
+
+        """Asserts text file ends with specified string from PDF file"""
+
+        with open(os.path.join(settings.MEDIA_ROOT, "converted_text.txt")) as f:
+            content = f.read()
+            content = content.strip("\n")
+            self.assertTrue(content.endswith("discharge."))
 
 
 
