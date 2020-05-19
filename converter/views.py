@@ -35,4 +35,5 @@ def pdf(request):
 
 
 def txt(request):
-    pass
+
+    return render(request, 'txt.html')

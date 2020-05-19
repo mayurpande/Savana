@@ -10,6 +10,9 @@ from functional_tests.test_pdf_to_text_converter_page import PDF_FILE
 
 
 # Create your tests here.
+from functional_tests.test_txt_file_to_json_converter import TXT_FILE
+
+
 class RouteTemplateTester(TestCase):
 
     def route(self, path, template_name):
@@ -93,7 +96,28 @@ class PdfConverterTest(RouteTemplateTester):
             self.assertEqual(response.status_code, 200)
 
 
+class TxtConverterTest(RouteTemplateTester):
 
+    def setUp(self):
+
+        """Opens Static txt file for testing and uses the client to post form data"""
+
+        with open(TXT_FILE, 'rb') as f:
+            upload_file = f.read()
+            form_data = {'file': SimpleUploadedFile(f.name, upload_file)}
+            self.response = self.client.post(reverse('txt'), form_data)
+
+    def tearDown(self):
+
+        """Removes all files in MEDIA_ROOT directory once test is completed"""
+
+        [os.remove(os.path.join(settings.MEDIA_ROOT, x)) for x in os.listdir(settings.MEDIA_ROOT)]
+
+    def test_pdf_converter_page_returns_template(self):
+
+        """Assert template is used"""
+
+        self.route(reverse('txt'), 'txt.html')
 
 
 
