@@ -20,6 +20,12 @@ def handle_converting_pdf_to_text(attachment):
         content_text = ''
         for page in pdf:
             content_text += page.strip() + "\n"
+
+        # Split/Strip/Join content
+        content_text = content_text.split("\n")
+        content_text = [x.strip() for x in content_text]
+        content_text = "\n".join(content_text)
+
         with open(settings.MEDIA_ROOT + "converted_text.txt", 'w') as p:
             p.write(content_text)
 
