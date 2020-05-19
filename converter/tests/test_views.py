@@ -81,9 +81,14 @@ class PdfConverterTest(RouteTemplateTester):
             self.assertTrue(content.endswith("discharge."))
 
     def test_pdf_view_returns_http_response(self):
+
+        """Asserts that the response of the HTTPResponse is 200"""
+
         file_path = os.path.join(settings.MEDIA_ROOT, "converted_text.txt")
         with open(file_path, 'r') as f:
+            # Set the content type
             response = HttpResponse(f.read(), content_type='text/plain')
+            # Set the attachment and filename
             response['Content-Disposition'] = 'attachment; filename=' + '"' + os.path.basename(file_path)
             self.assertEqual(response.status_code, 200)
 

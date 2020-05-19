@@ -1,3 +1,6 @@
+import glob
+import os
+
 from .base import Base
 from pathlib import Path
 
@@ -28,11 +31,14 @@ class PdfTextConverterPageTest(Base):
         self.browser.find_element_by_xpath("//button[@type='submit']").click()
         self.assertEqual(self.browser.find_element_by_tag_name("ul").text, 'You are only allowed type of PDF.')
 
-        # User uploads a PDF file - It displays a success message
+        # User uploads a PDF file
         self.browser.find_element_by_name('title').send_keys('Pdf file')
         self.browser.find_element_by_name('file').send_keys(PDF_FILE)
         self.browser.find_element_by_xpath("//button[@type='submit']").click()
 
+        # File has been downloaded
+        path = Path(os.environ['HOME'])
+        download_folder = glob.glob(str(path / 'Downloads' / '*'))
+        latest_downloaded_file = max(download_folder, key=os.path.getctime)
+        self.assertIn('converted_text', latest_downloaded_file)
 
-        # User is redirected to a page where it shows the text
-        self.browser.get(self.live_server_url + '/converted_pdf/')
