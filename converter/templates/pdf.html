@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="POST" action="{% url 'pdf' %}" role="form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if form.errors %}
+            <div class="form-group has-error">
+                <div class="help-block">{{ form.text.errors }}</div>
+            </div>
+        {% endif %}
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+{% endblock %}
