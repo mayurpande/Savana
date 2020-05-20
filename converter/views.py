@@ -2,7 +2,7 @@ import json
 import re
 import uuid
 
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.conf import settings
 
