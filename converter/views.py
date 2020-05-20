@@ -1,3 +1,4 @@
+import json
 import re
 import uuid
 
@@ -61,7 +62,13 @@ def txt(request):
                     patient_id = uuid.uuid4()
                     patient = PatientData(patient_id=patient_id, mr_num=mr_num, document_text=doc_text)
                     patient.save()
-                    # Return json response
-                    return JsonResponse({'patient_id': patient_id, 'document_text': doc_text})
+                    # Save JSON file and return HTTP response
+                    with open(settings.MEDIA_ROOT + "data.json", "w") as f:
+                        json.dump({'patient_id': str(patient_id), 'document_text': doc_text}, f)
+                    file_path = os.path.join(settings.MEDIA_ROOT, "data.json")
+                    with open(file_path, 'r') as f:
+                        response = HttpResponse(f.read(), content_type='text/json')
+                        response['Content-Disposition'] = 'attachment; filename=' + '"' + os.path.basename(file_path)
+                        return response
 
     return render(request, 'txt.html', {'form': form})
