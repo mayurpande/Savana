@@ -10,7 +10,7 @@ class LandingPageTest(Base):
     def test_landing_page(self):
 
         # User goes to live server url
-        self.browser.get(self.live_server_url + '/converter/')
+        self.browser.get(self.live_server_url)
 
         # There is a title
         self.assertIn('PDF/TXT Converter', self.browser.title)

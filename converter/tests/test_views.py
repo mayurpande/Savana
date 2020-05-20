@@ -6,10 +6,14 @@ from django.http import HttpResponse
 from django.test import TestCase
 from django.urls import reverse
 
+from converter.models import PatientData
 from functional_tests.test_pdf_to_text_converter_page import PDF_FILE
 
 
 # Create your tests here.
+from functional_tests.test_txt_file_to_json_converter import TXT_FILE
+
+
 class RouteTemplateTester(TestCase):
 
     def route(self, path, template_name):
@@ -93,7 +97,48 @@ class PdfConverterTest(RouteTemplateTester):
             self.assertEqual(response.status_code, 200)
 
 
+class TxtConverterTest(RouteTemplateTester):
 
+    def setUp(self):
 
+        """Opens Static txt file for testing and uses the client to post form data"""
+
+        with open(TXT_FILE, 'rb') as f:
+            upload_file = f.read()
+            self.form_data = {'file': SimpleUploadedFile(f.name, upload_file)}
+            self.response = self.client.post(reverse('txt'), self.form_data)
+
+    def tearDown(self):
+
+        """Removes all files in MEDIA_ROOT directory once test is completed"""
+
+        [os.remove(os.path.join(settings.MEDIA_ROOT, x)) for x in os.listdir(settings.MEDIA_ROOT)]
+
+    def test_txt_converter_page_returns_template(self):
+
+        """Assert template is used"""
+
+        self.route(reverse('txt'), 'txt.html')
+
+    def test_can_save_data_from_POST_request(self):
+
+        """Assert object has been saved"""
+
+        self.assertEqual(PatientData.objects.count(), 1)
+        new_patient_data = PatientData.objects.first()
+        self.assertEqual(new_patient_data.mr_num, 240804)
+
+    def test_response_returns_json_dump_file(self):
+
+        """Assert equals file has been downloaded"""
+
+        file_path = os.path.join(settings.MEDIA_ROOT, "data.json")
+        with open(file_path, 'r') as f:
+            response = HttpResponse(f.read(), content_type='text/json')
+            response['Content-Disposition'] = 'attachment; filename=' + '"' + os.path.basename(file_path)
+            self.assertEquals(
+                response.get('Content-Disposition'),
+                'attachment; filename=' + '"' + os.path.basename(file_path)
+            )
 
 

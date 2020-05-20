@@ -1,5 +1,6 @@
 from django.conf import settings
 import pdftotext
+import re
 
 
 def handle_upload_file(attachment):
@@ -19,15 +20,18 @@ def handle_converting_pdf_to_text(attachment):
         pdf = pdftotext.PDF(f)
         content_text = ''
         for page in pdf:
-            content_text += page.strip() + "\n"
+            content_text += page + "\n"
 
         # Split/Strip/Join content
         content_text = content_text.split("\n")
-        content_text = [x.strip() for x in content_text]
+        content_text = [x.strip() for x in content_text if x.strip() != ""]
         content_text = "\n".join(content_text)
+        content_text = re.sub(" +", ' ', content_text)
 
         with open(settings.MEDIA_ROOT + "converted_text.txt", 'w') as p:
             p.write(content_text)
+
+
 
 
 
