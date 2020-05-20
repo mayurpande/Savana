@@ -34,12 +34,10 @@ class TxtToJsonConverter(Base):
         self.browser.find_element_by_name('file').send_keys(TXT_FILE)
         self.browser.find_element_by_xpath("//button[@type='submit']").click()
         # TODO Assert message
-        self.browser.find_element_by_name('flash message')
+        #self.browser.find_element_by_name('flash message')
 
-
-
-        # # File has been downloaded
-        # path = Path(os.environ['HOME'])
-        # download_folder = glob.glob(str(path / 'Downloads' / '*'))
-        # latest_downloaded_file = max(download_folder, key=os.path.getctime)
-        # self.assertIn('converted_text', latest_downloaded_file)
+        # File has been downloaded
+        path = Path(os.environ['HOME'])
+        download_folder = glob.glob(str(path / 'Downloads' / '*.json'))
+        latest_downloaded_file = max(download_folder, key=os.path.getctime)
+        self.assertTrue(latest_downloaded_file.endswith('.json'))
