@@ -23,19 +23,18 @@ class TxtToJsonConverter(Base):
         self.browser.find_element_by_xpath("//button[@type='submit']").click()
 
         # User sees error messages saying that it is not allowed to submit an empty form
-        self.browser.find_element_by_css_selector('#id_title:invalid')
+        self.browser.find_element_by_css_selector('#id_file:invalid')
 
-        # User tries to upload a file that is not a TXT - It displays an error message saying only pdf format excepted
-        self.browser.find_element_by_name('title').send_keys('Image file')
+        # User tries to upload a file that is not a TXT - It displays an error message saying only TXT format excepted
         self.browser.find_element_by_name('file').send_keys(IMAGE_FILE)
         self.browser.find_element_by_xpath("//button[@type='submit']").click()
-        self.assertEqual(self.browser.find_element_by_tag_name("ul").text, 'You are only allowed type of PDF.')
+        self.assertEqual(self.browser.find_element_by_tag_name("ul").text, 'You are only allowed type of TXT.')
 
         # User uploads a TXF file
-        self.browser.find_element_by_name('title').send_keys('TXT file')
         self.browser.find_element_by_name('file').send_keys(TXT_FILE)
         self.browser.find_element_by_xpath("//button[@type='submit']").click()
         # TODO Assert message
+        self.browser.find_element_by_name('flash message')
 
         # File has been downloaded
         path = Path(os.environ['HOME'])

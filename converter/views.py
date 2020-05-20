@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.conf import settings
 
-from converter.forms import PdfConverterForm
+from converter.forms import PdfConverterForm, TxtJsonConverterForm
 from converter.handlers import handle_upload_file, handle_converting_pdf_to_text
 
 import os
@@ -35,5 +35,11 @@ def pdf(request):
 
 
 def txt(request):
+    form = TxtJsonConverterForm()
 
-    return render(request, 'txt.html')
+    if request.method == 'POST':
+        form = TxtJsonConverterForm(request.POST, request.FILES)
+        if form.is_valid():
+            print('ok')
+
+    return render(request, 'txt.html', {'form': form})

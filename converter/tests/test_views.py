@@ -119,5 +119,8 @@ class TxtConverterTest(RouteTemplateTester):
 
         self.route(reverse('txt'), 'txt.html')
 
-
-
+    # def test_handle_json_file_saved(self):
+    #
+    #     """Asserts json file is exists (after being converted and saved in handle_converting_text_to_json"""
+    #
+    #     self.assertEqual(os.path.exists(os.path.join(settings.MEDIA_ROOT, "converted_json.json")), True)
