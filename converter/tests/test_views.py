@@ -129,9 +129,16 @@ class TxtConverterTest(RouteTemplateTester):
         self.assertEqual(new_patient_data.mr_num, 240804)
 
     def test_response_returns_json_dump_file(self):
+
+        """Assert equals file has been downloaded"""
+
         file_path = os.path.join(settings.MEDIA_ROOT, "data.json")
         with open(file_path, 'r') as f:
             response = HttpResponse(f.read(), content_type='text/json')
             response['Content-Disposition'] = 'attachment; filename=' + '"' + os.path.basename(file_path)
-            return response
+            self.assertEquals(
+                response.get('Content-Disposition'),
+                'attachment; filename=' + '"' + os.path.basename(file_path)
+            )
+
 
