@@ -1,6 +1,7 @@
 from django.test import TestCase
 
 from converter.models import PatientData
+import uuid
 
 
 class PatientModelTest(TestCase):
@@ -9,13 +10,15 @@ class PatientModelTest(TestCase):
 
         first_item = PatientData()
         first_item.mr_num = 28004
-        first_item.patient_id = id(28004)
+        uni_id_one = uuid.uuid4()
+        first_item.patient_id = uni_id_one
         first_item.document_text = "Some patient text"
         first_item.save()
 
         second_item = PatientData()
         second_item.mr_num = 28005
-        second_item.patient_id = id(28005)
+        uni_id_two = uuid.uuid4()
+        second_item.patient_id = uni_id_two
         second_item.document_text = "Some other patient text"
         second_item.save()
 
@@ -25,8 +28,8 @@ class PatientModelTest(TestCase):
         first_saved_item = saved_items[0]
         second_saved_item = saved_items[1]
 
-        self.assertEqual(first_saved_item.patient_id, id(28004))
-        self.assertEqual(second_saved_item.patient_id, id(28005))
+        self.assertEqual(first_saved_item.patient_id, str(uni_id_one))
+        self.assertEqual(second_saved_item.patient_id, str(uni_id_two))
 
 
 

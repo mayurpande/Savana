@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.test import TestCase
 from django.urls import reverse
 
+from converter.models import PatientData
 from functional_tests.test_pdf_to_text_converter_page import PDF_FILE
 
 
@@ -104,8 +105,8 @@ class TxtConverterTest(RouteTemplateTester):
 
         with open(TXT_FILE, 'rb') as f:
             upload_file = f.read()
-            form_data = {'file': SimpleUploadedFile(f.name, upload_file)}
-            self.response = self.client.post(reverse('txt'), form_data)
+            self.form_data = {'file': SimpleUploadedFile(f.name, upload_file)}
+            self.response = self.client.post(reverse('txt'), self.form_data)
 
     def tearDown(self):
 
@@ -113,14 +114,16 @@ class TxtConverterTest(RouteTemplateTester):
 
         [os.remove(os.path.join(settings.MEDIA_ROOT, x)) for x in os.listdir(settings.MEDIA_ROOT)]
 
-    def test_pdf_converter_page_returns_template(self):
+    def test_txt_converter_page_returns_template(self):
 
         """Assert template is used"""
 
         self.route(reverse('txt'), 'txt.html')
 
-    # def test_handle_json_file_saved(self):
-    #
-    #     """Asserts json file is exists (after being converted and saved in handle_converting_text_to_json"""
-    #
-    #     self.assertEqual(os.path.exists(os.path.join(settings.MEDIA_ROOT, "converted_json.json")), True)
+    def test_can_save_data_from_POST_request(self):
+
+        """Assert object has been saved"""
+
+        self.assertEqual(PatientData.objects.count(), 1)
+        new_patient_data = PatientData.objects.first()
+        self.assertEqual(new_patient_data.mr_num, 240804)
