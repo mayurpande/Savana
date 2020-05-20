@@ -1,15 +1,14 @@
 import json
 import re
 import uuid
+import os
 
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.conf import settings
 
 from converter.forms import PdfConverterForm, TxtJsonConverterForm
 from converter.handlers import handle_upload_file, handle_converting_pdf_to_text
-
-import os
 
 
 # Create your views here.
