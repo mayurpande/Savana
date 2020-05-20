@@ -33,7 +33,6 @@ class PdfTextConverterPageTest(Base):
         # User uploads a PDF file
         self.browser.find_element_by_name('file').send_keys(PDF_FILE)
         self.browser.find_element_by_xpath("//button[@type='submit']").click()
-        # TODO assert message
 
         # File has been downloaded
         path = Path(os.environ['HOME'])
