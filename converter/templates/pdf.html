@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Upload PDF file</h2>
+    <br />
+    <form method="POST" action="{% url 'pdf' %}" role="form" enctype="multipart/form-data">
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% csrf_token %}
+        {{ form.file }}
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+{% endblock %}
