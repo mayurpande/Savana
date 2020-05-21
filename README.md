@@ -133,12 +133,12 @@ Testing (using existing activated virtual environment)
 
 Linux:
 
-Functional Tests
+
+Unit Tests
 ```
 (env) user@pc~Savana/$ python manage.py test converter
 ```
-
-Unit Tests
+Functional Tests
 ```
 (env) user@pc~Savana/$ python manage.py test functional_tests
 ```
