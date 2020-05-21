@@ -101,8 +101,6 @@ user@pc~Savana/$ source env/bin/activate
 
 (env) user@pc~Savana/$ pip install -r requirements.txt 
 
-(env) user@pc~Savana/$ python manage.py makemigrations
-
 (env) user@pc~Savana/$ python manage.py migrate
 
 (env) user@pc~Savana/$ python manage.py runserver
@@ -118,8 +116,6 @@ C:\Users\your_user\Documents\Savana\>py -m venv env
 C:\Users\your_user\Documents\Savana\>env\Scripts\activate.bat 
 
 (env) C:\Users\your_user\Documents\Savana\> pip install -r requirements.txt 
-
-(env) C:\Users\your_user\Documents\Savana\> python manage.py makemigrations
 
 (env) C:\Users\your_user\Documents\Savana\> python manage.py migrate
 
