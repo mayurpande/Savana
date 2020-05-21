@@ -8,6 +8,8 @@ class PatientModelTest(TestCase):
 
     def test_saving_and_retrieving_items(self):
 
+        """Test PatientData model is able to insert data"""
+
         first_item = PatientData()
         first_item.mr_num = 28004
         uni_id_one = uuid.uuid4()
@@ -28,6 +30,7 @@ class PatientModelTest(TestCase):
         first_saved_item = saved_items[0]
         second_saved_item = saved_items[1]
 
+        # Run assertion on patient_id values
         self.assertEqual(first_saved_item.patient_id, str(uni_id_one))
         self.assertEqual(second_saved_item.patient_id, str(uni_id_two))
 

@@ -9,6 +9,9 @@ from functional_tests.test_txt_file_to_json_converter import TXT_FILE
 class PdfConverterFormTest(TestCase):
 
     def test_form_validation_for_blank_items(self):
+
+        """Assert form fails on submission when input is empty"""
+
         form_data = {'file': SimpleUploadedFile('file', '')}
         form = PdfConverterForm('', form_data)
         self.assertFalse(form.is_valid())
@@ -16,6 +19,9 @@ class PdfConverterFormTest(TestCase):
         self.assertIn('The submitted file is empty.', form.errors['file'])
 
     def test_form_is_false_if_non_pdf_file_is_submitted(self):
+
+        """Assert form fails when non pdf type file is submitted"""
+
         with open(IMAGE_FILE, 'rb') as f:
             upload_file = f.read()
             form_data = {'file': SimpleUploadedFile(f.name, upload_file)}
@@ -23,6 +29,9 @@ class PdfConverterFormTest(TestCase):
             self.assertFalse(form.is_valid())
 
     def test_form_is_true_if_pdf_file_is_submitted(self):
+
+        """Assert form submits when file type is correct"""
+
         with open(PDF_FILE, 'rb') as f:
             upload_file = f.read()
             form_data = {'file': SimpleUploadedFile(f.name, upload_file)}
