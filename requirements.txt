@@ -3,7 +3,7 @@ Django==3.0.6
 django-crispy-forms==1.9.1
 pdftotext==2.1.4
 pkg-resources==0.0.0
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 pytz==2020.1
 selenium==3.141.0
 sqlparse==0.3.1
